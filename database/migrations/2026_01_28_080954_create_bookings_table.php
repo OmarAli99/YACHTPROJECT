@@ -21,7 +21,6 @@ return new class extends Migration
         
         // تاريخ الرحلة: عشان نعرف هو حاجز يوم إيه بالظبط
         $table->date('trip_date'); 
-        
         $table->text('notes')->nullable(); // لو عنده طلبات خاصة
         $table->timestamps(); // تاريخ عمل الحجز (created_at)
         });

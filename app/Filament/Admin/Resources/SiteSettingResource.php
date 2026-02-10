@@ -10,7 +10,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-// أهم الـ Imports اللي لازم تكون موجودة
+// الـ Imports المطلوبة
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\TextInput; 
 use Filament\Forms\Components\FileUpload;
@@ -20,17 +20,18 @@ class SiteSettingResource extends Resource
 {
     protected static ?string $model = SiteSetting::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth'; // غيرت الأيقونة لشكل الترس (أشيك للـ Settings)
+    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+    protected static ?string $navigationLabel = 'Page Setting';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                // تأكد من وجود Tabs::make
                 Tabs::make('Site Settings')
                     ->tabs([
+                        // 1. التاب الرئيسية
                         Tabs\Tab::make('الرئيسية')
-                            ->icon('heroicon-m-home') // أيقونة للتاب
+                            ->icon('heroicon-m-home')
                             ->schema([
                                 FileUpload::make('hero_image')
                                     ->label('صورة الصفحة الرئيسية')
@@ -42,50 +43,56 @@ class SiteSettingResource extends Resource
                                     ->required(),
                             ]),
 
+                        // 2. تاب عن اليخت
                         Tabs\Tab::make('عن اليخت')
-                        ->icon('heroicon-m-information-circle')
-                        ->schema([
-                            // حقل جديد خاص بسلايدر "عن اليخت" فقط
-                            FileUpload::make('about_image') 
-                                ->label('صور سلايدر (عن اليخت)')
-                                ->multiple() // عشان يرفع كذا صورة
-                                ->image()
-                                ->directory('about')
-                                ->reorderable()
-                                ->appendFiles()
-                                ->imageEditor(),
+                            ->icon('heroicon-m-information-circle')
+                            ->schema([
+                                FileUpload::make('about_image') 
+                                    ->label('صورة تعريفية واحدة')
+                                    ->multiple()
+                                    ->image() // تم حذف multiple بناءً على طلبك السابق
+                                    ->directory('about')
+                                    ->imageEditor(),
                                 
-                            Textarea::make('about_text')
-                                ->label('نص التعريف')
-                                ->rows(5),
-                        ]),
+                                Textarea::make('about_text')
+                                    ->label('نص التعريف')
+                                    ->rows(5),
+                            ]),
 
-                        Tabs\Tab::make('معرض الرحلات')
+                        // 3. تاب معرض الصور العام
+                        Tabs\Tab::make('معرض الصور')
                             ->icon('heroicon-m-photo')
                             ->schema([
                                 FileUpload::make('trips_images')
-                                    ->label('صور ألبوم الرحلات')
+                                    ->label('صور ألبوم الرحلات العام')
                                     ->multiple()
                                     ->image()
                                     ->directory('trips')
                                     ->reorderable()
-                                    ->appendFiles() // مهم: بيخليك تضيف صور جديدة على القديمة بدل ما يمسح كله
+                                    ->appendFiles()
                                     ->deletable(),
                             ]),
-                    ])->columnSpanFull()
-            ]);
+                    ])->columnSpanFull(), // هذا يضمن ظهور التابات بعرض الصفحة
+            ]); // هنا كان الخطأ (نقص إغلاق القوس والفاصلة المنقوطة)
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('hero_image')->label('صورة الهيرو'),
-                Tables\Columns\TextColumn::make('hero_title')->label('العنوان الرئيسي')->searchable(),
-                Tables\Columns\TextColumn::make('created_at')->label('آخر تحديث')->dateTime()->sortable(),
+                Tables\Columns\ImageColumn::make('hero_image')
+                    ->label('الصورة الرئيسية'),
+                Tables\Columns\TextColumn::make('hero_title')
+                    ->label('العنوان')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->label('آخر تحديث')
+                    ->dateTime()
+                    ->sortable(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->label('تعديل'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

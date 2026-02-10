@@ -97,10 +97,19 @@ class BookingResource extends Resource
                     'confirmed' => 'تم التأكيد',
                     'cancelled' => 'ملغي',
                 }),
+               Tables\Columns\TextColumn::make('notes')
+                ->label('الملاحظات')
+                ->limit(30) // هيعرض أول 30 حرف بس عشان الزحمة
+                ->tooltip(fn (Tables\Columns\TextColumn $column): ?string => $column->getState()) // هيظهر الملاحظة كاملة لما تقف بالماوس عليها
+                ->placeholder('لا توجد ملاحظات') // لو مفيش ملاحظة يكتب كدة بدل ما يسيبها فاضية
+                ->wrap() // لو الملاحظة طويلة يخليها تنزل سطر جديد بدل ما يطول الخانة بالعرض
+                ->toggleable(isToggledHiddenByDefault: true), 
             ])
             ->filters([])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                ->label('تعديل')
+                ->icon('heroicon-m-pencil-square'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

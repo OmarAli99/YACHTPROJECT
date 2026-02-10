@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Notifications\NewBookingNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class BookingController extends Controller
 {
@@ -19,7 +21,10 @@ class BookingController extends Controller
         ]);
 
         // 2. حفظ في الداتابيز
-        Booking::create($data);
+       $booking = Booking::create($data);
+
+        Notification::route('mail', 'omaralieid91@gmail.com')
+                ->notify(new NewBookingNotification($booking));
 
         // 3. الرجوع برسالة نجاح
         return back()->with('success', 'تم استلام طلب حجزك بنجاح! سنتواصل معك قريباً.');

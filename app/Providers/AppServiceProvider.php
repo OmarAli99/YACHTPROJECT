@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // مشاركة بيانات الإعدادات مع جميع ملفات Blade
         View::composer('*', function ($view) {
-            $view->with('setting', Setting::first());
+            $view->with('footersettings', Setting::first());
         });
     }
 }

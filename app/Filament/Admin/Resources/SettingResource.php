@@ -15,10 +15,10 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SettingResource extends Resource
 {
-    protected static ?string $model = Setting::class;
+    protected static ?string $model =Setting::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+protected static ?string $navigationLabel = 'Footer Setting'; // الاسم في القائمة
     public static function form(Form $form): Form
     {
         return $form
@@ -44,6 +44,8 @@ class SettingResource extends Resource
                 ->schema([
                     Forms\Components\Textarea::make('map_url')
                         ->label('كود iframe من خرائط جوجل')
+                        ->helperText('انسخ كود الـ Embed من Google Maps وضعه هنا')
+                        ->rows(3)
                         ->placeholder('<iframe ...></iframe>'),
                 ]),
         ]);
@@ -53,20 +55,42 @@ class SettingResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                //
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+        ->columns([
+            // عرض اسم اليخت بشكل بارز
+            Tables\Columns\TextColumn::make('title')
+                ->label('اسم اليخت')
+                ->searchable()
+                ->sortable(),
+
+            // عرض رقم الهاتف
+            Tables\Columns\TextColumn::make('phone')
+                ->label('رقم الهاتف')
+                ->icon('heroicon-m-phone'),
+
+            // عرض الإيميل
+            Tables\Columns\TextColumn::make('email')
+                ->label('البريد الإلكتروني')
+                ->icon('heroicon-m-envelope'),
+
+            // عرض العنوان (اختياري)
+            Tables\Columns\TextColumn::make('address')
+                ->label('العنوان')
+                ->limit(30), // يقص النص لو طويل عشان الجدول يفضل منظم
+        ])
+        ->filters([
+            //
+        ])
+        ->actions([
+            // زر التعديل
+            Tables\Actions\EditAction::make()
+                ->label('تعديل')
+                ->icon('heroicon-m-pencil-square'),
+        ])
+        ->bulkActions([
+            Tables\Actions\BulkActionGroup::make([
+                Tables\Actions\DeleteBulkAction::make(),
+            ]),
+        ]);
     }
 
     public static function getRelations(): array

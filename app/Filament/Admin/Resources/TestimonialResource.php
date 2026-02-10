@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Tables\Filters\ToggledFilter;
 
 class TestimonialResource extends Resource
 {
@@ -37,20 +38,47 @@ class TestimonialResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                //
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+        ->columns([
+            // صورة العميل بشكل دائري صغير
+            Tables\Columns\ImageColumn::make('image')
+                ->label('الصورة')
+                ->circular(),
+
+            // اسم العميل
+            Tables\Columns\TextColumn::make('name')
+                ->label('الاسم')
+                ->searchable()
+                ->sortable(),
+
+            // التقييم بالنجوم
+            Tables\Columns\TextColumn::make('stars')
+                ->label('التقييم')
+                ->formatStateUsing(fn (int $state): string => str_repeat('⭐', $state))
+                ->color('warning'),
+
+            // حالة التفعيل (ظاهر أو مخفي)
+            Tables\Columns\IconColumn::make('is_active')
+                ->label('الحالة')
+                ->boolean()
+                ->sortable(),
+
+            // تاريخ الإضافة
+            Tables\Columns\TextColumn::make('created_at')
+                ->label('تاريخ الإضافة')
+                ->dateTime('Y-m-d')
+                ->color('gray')
+                ->toggleable(isToggledHiddenByDefault: true),
+        ])
+         ->filters([])
+        ->actions([
+            Tables\Actions\EditAction::make()->label('تعديل'),
+            Tables\Actions\DeleteAction::make()->label('حذف'),
+        ])
+        ->bulkActions([
+            Tables\Actions\BulkActionGroup::make([
+                Tables\Actions\DeleteBulkAction::make(),
+            ]),
+        ]);
     }
 
     public static function getRelations(): array

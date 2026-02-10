@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Yacht;
 use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
