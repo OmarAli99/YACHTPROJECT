@@ -79,6 +79,27 @@
                                 <i class="fa fa-chevron-down absolute left-0 bottom-8 text-[#C5A059] text-xs pointer-events-none"></i>
                             </div>
                         </div>
+
+                        <div class="group space-y-4 text-right">
+                            <label class="text-[11px] font-black text-[#A68966] uppercase tracking-[0.3em] block text-right">نوع المناسبة / التجربة</label>
+                            <div class="relative text-right">
+                                <select name="occasion" class="w-full border-b-2 border-gray-100 focus:border-[#C5A059] py-5 outline-none transition-all text-2xl text-[#0A1D37] appearance-none bg-transparent cursor-pointer font-bold relative z-10 text-right">
+                                    <option value="private_cruise">رحلة نيلية خاصة (Private Cruise)</option>
+                                    <option value="birthday">احتفال عيد ميلاد / خطوبة</option>
+                                    <option value="romantic_dinner">عشاء رومانسي لشخصين</option>
+                                    <option value="photoshoot">جلسة تصوير (Photo Session)</option>
+                                    <option value="business">اجتماع عمل / VIP Gathering</option>
+                                    <option value="other">أخرى</option>
+                                </select>
+                                <i class="fa fa-chevron-down absolute left-0 bottom-8 text-[#C5A059] text-xs pointer-events-none"></i>
+                            </div>
+                        </div>
+
+                        <div class="group space-y-4 text-right">
+                            <label class="text-[11px] font-black text-[#A68966] uppercase tracking-[0.3em] block text-right">عدد الضيوف المقدر</label>
+                            <input type="number" name="guests_count" min="1" max="50" value="2" placeholder="عدد الأفراد" 
+                                class="w-full border-b-2 border-gray-100 focus:border-[#C5A059] py-5 outline-none transition-all text-2xl text-[#0A1D37] font-bold bg-transparent text-right">
+                        </div>
                     </div>
 
                     <div class="group space-y-4 w-full">

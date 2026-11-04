@@ -25,6 +25,11 @@
                     <span class="nav-line absolute -bottom-1 right-0 h-0.5 bg-[#C5A059] transition-all duration-300 w-0 group-hover:w-full"></span>
                 </a>
 
+                <a href="#packages" class="nav-link group relative py-2 transition-all duration-300">
+                    باقات الرحلات
+                    <span class="nav-line absolute -bottom-1 right-0 h-0.5 bg-[#C5A059] transition-all duration-300 w-0 group-hover:w-full"></span>
+                </a>
+
                 <a href="#booking" class="nav-link group relative py-2 transition-all duration-300">
                     اتصل بنا
                     <span class="nav-line absolute -bottom-1 right-0 h-0.5 bg-[#C5A059] transition-all duration-300 w-0 group-hover:w-full"></span>

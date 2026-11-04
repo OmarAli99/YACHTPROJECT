@@ -10,6 +10,7 @@
 {{-- trips_image --}}
 @include('front.tripimages')
 {{-- trips_image --}}
+@include('front.packages')
 @include('front.testmonial')
 @include('front.reservation')
 

@@ -17,16 +17,28 @@ class BookingController extends Controller
             'customer_phone' => 'required|string|max:20',
             'trip_date'      => 'required|date',
             'trip_time'      => 'required|string',
+            'occasion'       => 'nullable|string|max:255',
+            'guests_count'   => 'nullable|integer|min:1|max:50',
             'notes'          => 'nullable|string',
         ]);
 
-        // 2. حفظ في الداتابيز
-       $booking = Booking::create($data);
+        // القيمة الافتراضية لعدد الأفراد لو لم يُحدد
+        if (empty($data['guests_count'])) {
+            $data['guests_count'] = 2;
+        }
 
-        Notification::route('mail', 'omaralieid91@gmail.com')
+        // 2. حفظ في الداتابيز
+        $booking = Booking::create($data);
+
+        try {
+            Notification::route('mail', 'omaralieid91@gmail.com')
                 ->notify(new NewBookingNotification($booking));
+        } catch (\Throwable $e) {
+            // في حال عدم توفر اتصال بالإنترنت أو عدم ضبط إعدادات الميل لا تتوقف العملية
+            logger()->error('Failed to send booking notification: ' . $e->getMessage());
+        }
 
         // 3. الرجوع برسالة نجاح
-        return back()->with('success', 'تم استلام طلب حجزك بنجاح! سنتواصل معك قريباً.');
+        return back()->with('success', 'تم استلام طلب حجزك الملكي بنجاح! سنتواصل معك قريباً لتأكيد الموعد ⚓');
     }
 }
