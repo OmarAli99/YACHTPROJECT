@@ -23,7 +23,7 @@ class SiteSettingResource extends Resource
     protected static ?string $navigationLabel = 'إعدادات الموقع والهوية';
     protected static ?string $modelLabel = 'إعدادات الموقع';
     protected static ?string $pluralModelLabel = 'إعدادات الموقع';
-    protected static ?int $navigationSort = 10;
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {

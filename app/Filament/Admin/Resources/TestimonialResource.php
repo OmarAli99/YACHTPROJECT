@@ -18,20 +18,28 @@ class TestimonialResource extends Resource
 {
     protected static ?string $model = Testimonial::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
+    protected static ?string $navigationLabel = 'آراء العملاء';
+    protected static ?string $modelLabel = 'رأي عميل';
+    protected static ?string $pluralModelLabel = 'آراء العملاء';
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-            Forms\Components\TextInput::make('name')->required()->label('اسم العميل'),
-            Forms\Components\TextInput::make('job')->label('الوظيفة'),
-            Forms\Components\Select::make('stars')
-                ->options([5 => '⭐⭐⭐⭐⭐', 4 => '⭐⭐⭐⭐', 3 => '⭐⭐⭐'])
-                ->default(5)->label('التقييم'),
-            Forms\Components\FileUpload::make('image')->image()->directory('testimonials')->label('صورة العميل'),
-            Forms\Components\Textarea::make('content')->required()->columnSpanFull()->label('الرأي'),
-            Forms\Components\Toggle::make('is_active')->default(true)->label('تفعيل'),
+                Forms\Components\TextInput::make('name')->required()->label('اسم العميل'),
+                Forms\Components\TextInput::make('job')->label('الوظيفة / الصفة'),
+                Forms\Components\Select::make('stars')
+                    ->options([5 => '⭐⭐⭐⭐⭐ (5 نجوم)', 4 => '⭐⭐⭐⭐ (4 نجوم)', 3 => '⭐⭐⭐ (3 نجوم)'])
+                    ->default(5)->label('التقييم'),
+                Forms\Components\FileUpload::make('image')
+                    ->disk('public')
+                    ->image()
+                    ->directory('testimonials')
+                    ->label('صورة العميل'),
+                Forms\Components\Textarea::make('content')->required()->columnSpanFull()->label('رأي العميل'),
+                Forms\Components\Toggle::make('is_active')->default(true)->label('تفعيل الظهور في الموقع'),
             ]);
     }
 
