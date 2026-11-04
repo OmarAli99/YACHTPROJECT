@@ -7,7 +7,7 @@
             <div class="space-y-8 animate-fade-in">
                 <div>
                     <h3 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-l from-[#F3E5AB] via-[#C5A059] to-[#94733C] font-amiri drop-shadow-lg inline-block">
-                        {{ $footersettings->hero_title ?? 'Yacht Luxury' }}
+                        {{ $settings?->site_name ?? $footersettings->hero_title ?? 'Yacht Luxury' }}
                     </h3>
                     <div class="w-12 h-0.5 bg-[#C5A059] mt-2 rounded-full"></div>
                 </div>
@@ -121,7 +121,7 @@
 
         <div class="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
             <p class="text-gray-500 text-xs font-light tracking-wide order-2 md:order-1">
-                © {{ date('Y') }} <span class="text-[#C5A059] font-bold">{{ $footersettings->hero_title ?? 'Yacht Luxury' }}</span>. جميع الحقوق محفوظة.
+                © {{ date('Y') }} <span class="text-[#C5A059] font-bold">{{ $settings?->site_name ?? $footersettings?->hero_title ?? 'Yacht Luxury' }}</span>. جميع الحقوق محفوظة.
             </p>
             
             <div class="flex items-center gap-2 order-1 md:order-2">

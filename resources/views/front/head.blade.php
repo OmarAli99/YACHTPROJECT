@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yacht Luxury - حجز يخت</title>
+    <title>{{ $settings->site_name ?? 'Yacht Luxury' }} - {{ $settings->site_subtitle ?? 'حجز رحلات نيلية فاخرة' }}</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -14,8 +14,15 @@
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=2">
-    <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}?v=2"> 
+    @php
+        $faviconPath = (!empty($settings?->favicon))
+            ? asset('storage/' . $settings->favicon)
+            : ((!empty($settings?->logo)) 
+                ? asset('storage/' . $settings->logo) 
+                : asset('favicon.png'));
+    @endphp
+    <link rel="icon" type="image/png" href="{{ $faviconPath }}?v=3">
+    <link rel="apple-touch-icon" href="{{ $faviconPath }}?v=3"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />

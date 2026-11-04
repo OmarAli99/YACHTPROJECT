@@ -21,9 +21,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // مشاركة بيانات الإعدادات مع جميع ملفات Blade
-        View::composer('*', function ($view) {
+        // مشاركة بيانات الإعدادات مع ملفات الواجهة الأمامية فقط
+        View::composer(['master', 'index', 'front.*'], function ($view) {
             $view->with('footersettings', Setting::first());
+            $view->with('settings', \App\Models\SiteSetting::first());
         });
     }
 }

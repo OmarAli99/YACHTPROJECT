@@ -2,12 +2,30 @@
     <div class="container mx-auto px-6">
         <div class="flex items-center justify-between bg-[#0A1D37]/90 backdrop-blur-xl border border-white/10 px-8 py-4 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
             
-            <div class="flex flex-col items-start border-r-4 border-[#C5A059] pr-4 text-right">
-                <h1 class="text-2xl md:text-3xl font-black text-white font-amiri leading-none italic tracking-tight">
-                    YACHT <span class="text-[#C5A059]">LUXURY</span>
-                </h1>
-                <p class="text-[9px] text-[#C5A059] uppercase tracking-[0.4em] font-bold mt-1">Royal Cruise</p>
-            </div>
+            <a href="#home" class="flex items-center gap-3 text-right group">
+                @php
+                    $logoSrc = (!empty($settings?->logo)) 
+                        ? asset('storage/' . $settings->logo) 
+                        : asset('favicon.png');
+                @endphp
+
+                <img src="{{ $logoSrc }}" 
+                     alt="{{ $settings?->site_name ?? 'Yacht Luxury' }}" 
+                     class="h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
+
+                <div class="flex flex-col items-start border-r-4 border-[#C5A059] pr-3 text-right">
+                    <h1 class="text-2xl md:text-3xl font-black text-white font-amiri leading-none italic tracking-tight">
+                        @if(!empty($settings?->site_name))
+                            {{ $settings->site_name }}
+                        @else
+                            YACHT <span class="text-[#C5A059]">LUXURY</span>
+                        @endif
+                    </h1>
+                    <p class="text-[9px] text-[#C5A059] uppercase tracking-[0.4em] font-bold mt-1">
+                        {{ $settings?->site_subtitle ?? 'Royal Cruise' }}
+                    </p>
+                </div>
+            </a>
 
             <div class="hidden lg:flex items-center gap-10 text-white font-bold text-sm tracking-wide">
                 <a href="#home" class="nav-link group relative py-2 transition-all duration-300 active-link">
