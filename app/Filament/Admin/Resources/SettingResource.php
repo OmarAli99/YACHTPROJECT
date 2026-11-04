@@ -22,6 +22,11 @@ class SettingResource extends Resource
     protected static ?string $modelLabel = 'بيانات التواصل';
     protected static ?string $pluralModelLabel = 'بيانات التواصل والفوتر';
     protected static ?int $navigationSort = 5;
+
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->role === 'admin';
+    }
     public static function form(Form $form): Form
     {
         return $form

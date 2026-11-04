@@ -10,6 +10,11 @@ class StatsOverviewWidget extends BaseWidget
 {
     protected static ?string $pollingInterval = '15s';
 
+    public static function canView(): bool
+    {
+        return auth()->user()?->role === 'admin';
+    }
+
     protected function getStats(): array
     {
         // 1. رحلات هذا الشهر
